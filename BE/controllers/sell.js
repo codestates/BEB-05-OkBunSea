@@ -1,5 +1,7 @@
 module.exports = (req, res) => {
     const body = req.body
+    console.log("============")
+    console.log(`sell-1) BE : requset ${JSON.stringify(body)}`)
     const options = {
         uri:'http://localhost:4001/sell', 
         method: 'POST',

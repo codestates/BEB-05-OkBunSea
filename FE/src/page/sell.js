@@ -12,7 +12,7 @@ function Sell({myAddress, showPopUp}){
             showPopUp('에러','지갑을 먼저 연동해주세요',()=>{})
             return;
         }
-        const URL = 'http://localhost:4000/buy';
+        const URL = 'http://localhost:4000/sell';
         let body = {
             address:myAddress,
             nftId:nftId
