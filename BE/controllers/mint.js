@@ -10,6 +10,15 @@
 
 module.exports = (req, res) => {
     const body = req.body
-    res.status(200);
-    res.send(`buy : ${JSON.stringify(body)}`);
+    const options = {
+        uri:'http://localhost:4001/mint', 
+        method: 'POST',
+        body: body,
+        json:true
+    }
+    var request = require('request');
+    request.post(options, function(err,response,body){
+        res.status(200);
+        res.send(body);
+    })
 };
