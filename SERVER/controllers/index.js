@@ -1,3 +1,4 @@
 module.exports = {
-  add: require('./add')
+  add: require('./add'),
+  get: require('./get')
 };
