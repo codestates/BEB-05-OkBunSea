@@ -12,6 +12,7 @@ app.all('/*', function(req, res, next) {
 });
 
 app.post("/add", controllers.add);
+app.post("/get", controllers.get);
 
 const PORT = 4002;
 
