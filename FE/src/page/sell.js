@@ -34,6 +34,7 @@ function Sell({myAddress, showPopUp}){
 
     return <div>
         <Form.Control
+            className="mb-3"
             value={nftId}
             onChange = {(e) =>{
                 setNftId(e.target.value);
@@ -42,8 +43,8 @@ function Sell({myAddress, showPopUp}){
             type="text"
             placeholder="판매할 NFT ID"
         />
-        <Button onClick={()=>handleQuery()}> sell </Button>
-        <Card>response : {response} </Card>
+        <Button className="mb-3 btn btn-primary btn-lg" onClick={()=>handleQuery()}> Sell </Button>
+        <Card className="mt-3 p-3 bg-primary text-white rounded">Response : {response} </Card>
          
     </div>
 }

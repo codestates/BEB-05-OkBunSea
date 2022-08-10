@@ -1,10 +1,11 @@
 import {Alert, Form} from 'react-bootstrap';
 import logo from './logo.png';
+import Container from 'react-bootstrap/Container';
 
 function Header({myAddress,setMyAddress}){
 
-    return <Alert className='header' variant={"balance"} >
-            <img src={logo} width={"100px"} className="logo"/>
+    return <Container className="panel"><Alert className='header' variant={"balance"} >
+            <a href="/"><img src={logo} width={"120px"} className="logo img-fluid"/></a>
             <Form.Control
                 value={myAddress}
                 onChange = {(e) =>{
@@ -13,8 +14,8 @@ function Header({myAddress,setMyAddress}){
                 }
                 type="text"
                 placeholder="지갑주소"
-            />
-        </Alert>
+            />            
+        </Alert></Container>
 }
 
 export default Header;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Button, Card,Form } from 'react-bootstrap';
+import { Button, Card, Form } from 'react-bootstrap';
 
 function Buy({myAddress, showPopUp}){
 
@@ -34,6 +34,7 @@ function Buy({myAddress, showPopUp}){
 
     return <div>
         <Form.Control
+            className="mb-3"
             value={nftId}
             onChange = {(e) =>{
                 setNftId(e.target.value);
@@ -42,8 +43,8 @@ function Buy({myAddress, showPopUp}){
             type="text"
             placeholder="구매할 NFT ID"
         />
-        <Button onClick={()=>handleQuery()}> buy </Button>
-        <Card>response : {response} </Card>
+        <Button className="mb-3 btn btn-primary btn-lg" onClick={()=>handleQuery()}> Buy </Button>
+        <Card className="mt-3 p-3 bg-primary text-white rounded">Response : {response} </Card>
          
     </div>
 }

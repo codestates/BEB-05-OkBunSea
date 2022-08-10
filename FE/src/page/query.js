@@ -31,8 +31,8 @@ function Query({myAddress, showPopUp}){
     }
 
     return <div>
-        <Button onClick={()=>handleQuery()}> query </Button>
-        <Card>response : {response} </Card>
+        <Button className="mb-3 btn btn-primary btn-lg" onClick={()=>handleQuery()}>Query </Button>
+        <Card className="mt-3 p-3 bg-primary text-white rounded">Response : {response} </Card>
          
     </div>
 }
