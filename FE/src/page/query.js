@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Nfts from '../components/nfts';
 import { Button } from 'react-bootstrap';
 import erc721abi from '../components/erc721Abi';
+import { addListener } from 'process';
 
 function Query({myAddress, showPopUp, web3, contractaddr}){
     const [nfts, setNfts] = useState([])

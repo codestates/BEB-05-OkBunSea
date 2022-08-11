@@ -10,7 +10,7 @@ function App() {
   const [modalData,setModalData] = useState({});
   const [myAddress, setMyAddress] = useState("");
   const [web3, setWeb3] = useState();
-  const contractaddr = '0xf574b50Ca26590997De7e3F21d6C6e8D5A58F4E9'
+  const contractaddr = '0x1C0b81280a5e218E1f02aa3Ffab2069e12a38fC8'
     useEffect(() => {
         if (typeof window.ethereum !== "undefined") { // window.ethereum이 있다면
             try {

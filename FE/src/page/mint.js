@@ -1,43 +1,42 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+
 import { Button, Card,Form,Container } from 'react-bootstrap';
-import UploadImage from '../components/fileManager';
 import erc721abi from '../components/erc721Abi';
+import { NFTStorage } from 'nft.storage'
+const client = new NFTStorage({ token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDA3NWQyNzEzNTg2RDJmMzJhMDcyYTMyN0I3ZTI4ODE4MUY2NUVEOUUiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY2MDE5MjY1Njk4OCwibmFtZSI6Ik9rQnVuU2VhIn0.QiGkZi3fsIJVHUXP7o5ZirkR4u4EuZdJKgJY5Wv4RC4' })
+
 
 function Mint({myAddress, showPopUp,web3, contractaddr}){
-
-    const [image, setImage] = useState("")
-    const [external_url,setExternal_url] = useState("")
+    const [imgFile, setImgFile] = useState()
+    // const [image, setImage] = useState("")
+    const [description,setDescription] = useState("")
     const [name, setName] =useState("")
-    const [attributes, setAttributes] = useState("")
+    // const [attributes, setAttributes] = useState("")
     const [fileURI, setFileURI] = useState("")
 
+    const handleImage = (event) =>{
+        setImgFile(event.target.files[0]);
+    }
+
     const handleQuery = async () => {
+        console.log("click")
         if(myAddress==""){
             showPopUp('에러','지갑을 먼저 연동해주세요',()=>{})
             return;
         }
-        const URL = 'http://localhost:4002/add';
-        let body = {
-            name:name,
-            image:image,
-            external_url:external_url,
-            attributes:attributes
-        };
-
-        const _body = JSON.stringify(body);
-        console.log(`request: ${_body}`)
-        axios.post(URL,_body,{
-          headers: {
-            'Content-Type':'application/json'
-          }
-        }).then((res)=>{
-            setFileURI(res.data)
-        }
-        ).catch((err)=>{
-            showPopUp('에러','에러입니다',()=>{})
-        })
+        createURI()
     }
+
+        async function createURI() {
+            const metadata = await client.store({
+                name: name,
+                description: description,
+                image: imgFile,
+            })
+            console.log(`https://${metadata.ipnft}.ipfs.nftstorage.link/metadata.json`)
+            setFileURI(`https://${metadata.ipnft}.ipfs.nftstorage.link/metadata.json`)
+            // ipfs://bafyreib4pff766vhpbxbhjbqqnsh5emeznvujayjj4z2iu533cprgbz23m/metadata.json
+            }
 
     const mintOwnFile = async function () {
         let tokenContract = await new web3.eth.Contract(erc721abi, contractaddr);
@@ -65,25 +64,15 @@ function Mint({myAddress, showPopUp,web3, contractaddr}){
         />
         <Form.Control
             className="mb-3"
-            value={external_url}
+            value={description}
             onChange = {(e) =>{
-                setExternal_url(e.target.value);
-                }
-            }
-            type="text"
-            placeholder="external_url"
-        />
-        <Form.Control
-            className="mb-3"
-            value={attributes}
-            onChange = {(e) =>{
-                setAttributes(e.target.value);
+                setDescription(e.target.value);
                 }
             }
             type="text"
             placeholder="attributes"
         />
-        <UploadImage setImage={setImage}/>
+        <input className="UploadImage" type="file" onChange={handleImage} />
         <Button className="mb-3 btn btn-primary btn-lg" onClick={()=>handleQuery()}> Make </Button>
         <Button className="mb-3 btn btn-primary btn-lg"  onClick={()=>mintOwnFile()}> Mint </Button>
         </Container>
