@@ -1,22 +1,23 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Button, Card,Form } from 'react-bootstrap';
-import Container from 'react-bootstrap/Container';
+import { Button, Card,Form,Container } from 'react-bootstrap';
+import UploadImage from '../components/fileManager';
+import erc721abi from '../components/erc721Abi';
 
-function Mint({myAddress, showPopUp}){
+function Mint({myAddress, showPopUp,web3, contractaddr}){
 
-    const [response, setResponse] = useState("")
     const [image, setImage] = useState("")
     const [external_url,setExternal_url] = useState("")
     const [name, setName] =useState("")
     const [attributes, setAttributes] = useState("")
+    const [fileURI, setFileURI] = useState("")
 
     const handleQuery = async () => {
         if(myAddress==""){
             showPopUp('에러','지갑을 먼저 연동해주세요',()=>{})
             return;
         }
-        const URL = 'http://localhost:3000/mint';
+        const URL = 'http://localhost:4002/add';
         let body = {
             name:name,
             image:image,
@@ -31,13 +32,23 @@ function Mint({myAddress, showPopUp}){
             'Content-Type':'application/json'
           }
         }).then((res)=>{
-            setResponse(res.data)
+            setFileURI(res.data)
         }
         ).catch((err)=>{
             showPopUp('에러','에러입니다',()=>{})
         })
     }
 
+    const mintOwnFile = async function () {
+        let tokenContract = await new web3.eth.Contract(erc721abi, contractaddr);
+        console.log(`fileURI ${fileURI}`)
+        const minting = await tokenContract.methods.mintNFT(myAddress, fileURI).send({
+        from: myAddress
+        });
+        console.log(minting);
+        // addNewErc721Token();
+        setFileURI("");
+    };
     return <div>
         <Container className="panel">
 
@@ -62,16 +73,6 @@ function Mint({myAddress, showPopUp}){
             type="text"
             placeholder="external_url"
         />
-        <Form.Control 
-            className="mb-3"
-            value={image}
-            onChange = {(e) =>{
-                setImage(e.target.value);
-                }
-            }
-            type="text"
-            placeholder="image"
-        />
         <Form.Control
             className="mb-3"
             value={attributes}
@@ -82,8 +83,9 @@ function Mint({myAddress, showPopUp}){
             type="text"
             placeholder="attributes"
         />
-        <Button className="mb-3 btn btn-primary btn-lg" onClick={()=>handleQuery()}> Mint </Button>
-        <Card className="mt-3 p-3 bg-primary text-white rounded">Response : {response} </Card>
+        <UploadImage setImage={setImage}/>
+        <Button className="mb-3 btn btn-primary btn-lg" onClick={()=>handleQuery()}> Make </Button>
+        <Button className="mb-3 btn btn-primary btn-lg"  onClick={()=>mintOwnFile()}> Mint </Button>
         </Container>
     </div>
 }

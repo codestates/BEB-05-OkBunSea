@@ -2,13 +2,25 @@ import './App.css';
 import Main from './page/main';
 import PopUp from './components/modal';
 import Header from './components/header'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import Web3 from 'web3';
 
 function App() {
   const [showModal,setShowModal] = useState(false);
   const [modalData,setModalData] = useState({});
   const [myAddress, setMyAddress] = useState("");
-
+  const [web3, setWeb3] = useState();
+  const contractaddr = '0xf574b50Ca26590997De7e3F21d6C6e8D5A58F4E9'
+    useEffect(() => {
+        if (typeof window.ethereum !== "undefined") { // window.ethereum이 있다면
+            try {
+                const web = new Web3(window.ethereum);  // 새로운 web3 객체를 만든다
+                setWeb3(web);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+    }, []);
   const showPopUp = (title, content, callback) =>{
     setModalData({
       title: title,
@@ -21,7 +33,7 @@ function App() {
   return (
     <div className="App">
       <Header myAddress={myAddress} setMyAddress={setMyAddress}/>
-      <Main myAddress={myAddress} showPopUp={showPopUp}/>
+      <Main myAddress={myAddress} showPopUp={showPopUp} web3={web3} contractaddr={contractaddr}/>
       <PopUp showModal={showModal} setShowModal={setShowModal} modalData={modalData}/>
     </div>
   );

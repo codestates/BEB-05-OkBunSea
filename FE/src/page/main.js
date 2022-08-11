@@ -16,7 +16,7 @@ function remove_img() {
 
 
 
-function Main({myAddress, showPopUp}){
+function Main({myAddress, showPopUp,web3,contractaddr}){
     const [tab, setTab] = useState("Main")
     
     return<div>
@@ -40,8 +40,8 @@ function Main({myAddress, showPopUp}){
           </Tab>
         </Tabs>
         {tab=="About" ? <About myAddress={myAddress} showPopUp={showPopUp}/>:null}
-        {tab=="Mint" ? <Mint myAddress={myAddress} showPopUp={showPopUp}/>:null}
-        {tab=="Query" ? <Query myAddress={myAddress} showPopUp={showPopUp}/>:null}
+        {tab=="Mint" ? <Mint myAddress={myAddress} showPopUp={showPopUp}  web3={web3} contractaddr={contractaddr}/>:null}
+        {tab=="Query" ? <Query myAddress={myAddress} showPopUp={showPopUp}  web3={web3} contractaddr={contractaddr}/>:null}
         {tab=="Buy" ? <Buy myAddress={myAddress} showPopUp={showPopUp}/>:null}
         {tab=="Sell" ? <Sell myAddress={myAddress} showPopUp={showPopUp}/>:null}
 
