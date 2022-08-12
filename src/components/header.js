@@ -13,7 +13,7 @@ function Header({myAddress,setMyAddress}){
     };
 
     return <Container className="panel"><Alert className='header' variant={"balance"} >
-            <a href="/"><img src={logo} width={"120px"} className="logo img-fluid"/></a>
+            <a href="https://codestates.github.io/BEB-05-OkBunSea/"><img src={logo} width={"120px"} className="logo img-fluid"/></a>
             <Card className="address" >{myAddress}</Card>   
             <Button
                     className="metaConnect"
