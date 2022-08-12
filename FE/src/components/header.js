@@ -14,14 +14,14 @@ function Header({myAddress,setMyAddress}){
 
     return <Container className="panel"><Alert className='header' variant={"balance"} >
             <a href="/"><img src={logo} width={"120px"} className="logo img-fluid"/></a>
-            <Card className="address" >주소: {myAddress}</Card>   
+            <Card className="address" >{myAddress}</Card>   
             <Button
                     className="metaConnect"
                     onClick={() => {
                         connectWallet();
                     }}
                 >
-                    connect to MetaMask
+                   지갑 연결
                 </Button>
                  
         </Alert></Container>

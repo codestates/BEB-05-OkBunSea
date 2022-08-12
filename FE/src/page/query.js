@@ -3,9 +3,16 @@ import Nfts from '../components/nfts';
 import { Button } from 'react-bootstrap';
 import erc721abi from '../components/erc721Abi';
 import { addListener } from 'process';
+import Transfer from './transfer';
 
-function Query({myAddress, showPopUp, web3, contractaddr}){
+function Query({myAddress, showPopUp, web3, contractaddr,setLoading}){
     const [nfts, setNfts] = useState([])
+    const [nftInfo, setNftInfo] = useState()
+
+    const clickNFT = (data) =>{
+      console.log(data)
+      setNftInfo(data);
+    }
 
     const queryNfts = async () => {
 		  const tokenContract = await new web3.eth.Contract(
@@ -29,12 +36,20 @@ function Query({myAddress, showPopUp, web3, contractaddr}){
 
           let res_nfts=[];
           for (let token of temp_nfts){
-            const data = await fetch(token.tokenURI)
+            let data = {}
+            data = await fetch(token.tokenURI)
                 .then(response => response.json())
                 .then((res)=>{
                     return res
-                });
-            res_nfts.push(data)
+                }).catch((error) => {
+                  return {
+                    name : "undefined",
+                    image : 'https://opensea.io/static/images/placeholder.png'
+                  }
+                });;
+
+            let tempNFT = {id:token.tokenId, info:data}
+            res_nfts.push(tempNFT)
           }
             console.log("temp_nfts")
             console.log(res_nfts)
@@ -42,10 +57,15 @@ function Query({myAddress, showPopUp, web3, contractaddr}){
 	}
 
     return <div>
-        <Nfts nftList={nfts}/>
-        <Button className="mb-3 btn btn-primary btn-lg" onClick={()=>queryNfts()}>Query </Button>
+        {nftInfo === undefined ? <div>
+            <Nfts nftList={nfts} clickNFT={clickNFT}/>
+            <Button className="mb-3 btn btn-primary btn-lg" onClick={()=>queryNfts()}>Query </Button>
+          </div> :
+          <div>
+          <Transfer web3={web3} myAddress={myAddress} NFT={nftInfo} setNftInfo={setNftInfo} contractaddr={contractaddr}/>
+          </div>
+        }
         {/* <Card className="mt-3 p-3 bg-primary text-white rounded">Response : {response} </Card> */}
-         
     </div>
 }
 
