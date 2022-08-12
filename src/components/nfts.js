@@ -9,7 +9,7 @@ function Nfts({ nftList,clickNFT }) {
                     let tempArr = image.split('ipfs://');
                     image = `https://ipfs.io/ipfs/${tempArr[1]}`
                 }
-                return <Card key={el.id} style={{width:'300px'}}>
+                return <Card key={el.id} className="nft">
                     <Card.Header>{el.info.name}</Card.Header>
                     <Card.Img src={image}></Card.Img>
                     id : {el.id}

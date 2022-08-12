@@ -26,3 +26,12 @@
 .UploadImage{
   width: 100%;
 }
+
+.nft{
+  width:300px;
+  margin: 1rem;
+}
+
+.nftList{
+  display: flex;
+}
