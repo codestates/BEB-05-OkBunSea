@@ -4,6 +4,10 @@
 
 <a href="https://codestates.github.io/BEB-05-OkBunSea/"><img src="https://img.shields.io/badge/demo START-000000?style=for-the-badge&logo=Github&logoColor=white"></a>
 
+# Flow Chart
+
+![FlowChart](./DOC//FlowChart.png)
+
 # 역할분담
 
 | 이름   | 역할              |
