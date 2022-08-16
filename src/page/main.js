@@ -9,16 +9,18 @@ import Buy from './buy';
 import Sell from './sell';
 import PlzWait from '../components/plzWait';
 
-function remove_img() {
-  var element = document.getElementById("noneDiv");
-  element.classList.add("d-none")
-}
-
-
-
-function Main({myAddress, showPopUp,web3,contractaddr}){
+function Main({myAddress, showPopUp, web3, contractaddr}){
     const [tab, setTab] = useState("Main")
     const [loading, setLoading] = useState(false)
+
+    function remove_img() {
+      const xyz = document.getElementsByClassName('noneDiv');
+      console.log(xyz);
+      xyz.remove();
+    
+    }
+    
+    
     return<div>
       <Container className="panel" >
         <Tabs
@@ -28,7 +30,11 @@ function Main({myAddress, showPopUp,web3,contractaddr}){
           id = "tabs_selection"          
           justify
         >
-          <Tab eventKey="About"  title="About" onClick={()=>setTab("About")}> 
+          <Tab eventKey="About"  title="About" onClick={()=> {
+            remove_img()
+            setTab("About")
+          }}> 
+
           </Tab>
           <Tab eventKey="Mint"  title="Mint" onClick={()=>setTab("Mint")}>
           </Tab>
@@ -39,18 +45,24 @@ function Main({myAddress, showPopUp,web3,contractaddr}){
           <Tab eventKey="Sell" title="Sell" onClick={()=>setTab("Sell")}>
           </Tab>
         </Tabs>
+
         {tab=="About" ? <About myAddress={myAddress} showPopUp={showPopUp}/>:null}
         {tab=="Mint" ? <Mint myAddress={myAddress} showPopUp={showPopUp}  web3={web3} contractaddr={contractaddr} setLoading={setLoading}/>:null}
         {tab=="Query" ? <Query myAddress={myAddress} showPopUp={showPopUp}  web3={web3} contractaddr={contractaddr} setLoading={setLoading}/>:null}
         {tab=="Buy" ? <Buy myAddress={myAddress} showPopUp={showPopUp}/>:null}
         {tab=="Sell" ? <Sell myAddress={myAddress} showPopUp={showPopUp}/>:null}
 
-        <div id="noneDiv"><img src={main_img} width={"100%"} className="main_img " alt="Main pic"/></div>
+        <div className="noneDiv"><img src={main_img} width={"100%"} className="main_img" alt="Main pic"/></div>
         
       </Container>
       <PlzWait showModal={loading}/>
     </div>
 }
+
+const xyz = document.getElementsByClassName('noneDiv');
+      console.log(xyz)
+      
+
 
 
 

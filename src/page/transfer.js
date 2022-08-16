@@ -1,6 +1,6 @@
 import erc721abi from '../components/erc721Abi'
 import React, { useEffect, useState } from 'react';
-import {Card,Button,Form} from 'react-bootstrap'
+import {Card,Button,Form, Container} from 'react-bootstrap'
 
 function Transfer({web3, myAddress, NFT, contractaddr}){
     const [toAddr, setToAddr] = useState("");
@@ -28,22 +28,26 @@ function Transfer({web3, myAddress, NFT, contractaddr}){
             });
         };
 
-        return <div>
-            <Card style={{width:'800px'}}>
-            <Card.Header>{NFT.name}</Card.Header>
-            <Card.Img src={image}></Card.Img>
-            <Form.Control
-            className="mb-3"
-            value={toAddr}
-            onChange = {(e) =>{
-                setToAddr(e.target.value);
-                }
-            }
-            type="text"
-            placeholder="address"
-        />
-            <Button onClick={()=>{sendToken(toAddr,NFT.id)}}>전송</Button>
-            </Card>
+        return <div> 
+            <Container className="panel">
+                <div className="row justify-content-center">
+                    <Card style={{width:'45rem'}}>
+                    <Card.Header>{NFT.name}</Card.Header>
+                    <Card.Img src={image}></Card.Img>
+                    <Form.Control
+                    className="mt-4 mb-4 p-3"
+                    value={toAddr}
+                    onChange = {(e) =>{
+                        setToAddr(e.target.value);
+                        }
+                    }
+                    type="text"
+                    placeholder="address"
+                    />
+                    <Button className="mt-2 mb-4 p-3" onClick={()=>{sendToken(toAddr,NFT.id)}}>전송</Button>
+                    </Card>
+                </div>
+            </Container>
                     </div>
 }
 export default Transfer;

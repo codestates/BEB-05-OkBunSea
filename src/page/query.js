@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Container from 'react-bootstrap/Container';
 import Nfts from '../components/nfts';
 import { Button } from 'react-bootstrap';
 import erc721abi from '../components/erc721Abi';
@@ -56,10 +57,33 @@ function Query({myAddress, showPopUp, web3, contractaddr,setLoading}){
           setNfts(res_nfts)
 	}
 
-    return <div>
+    return <Container className="panel" >
+    <div>
         {nftInfo === undefined ? <div>
-            <Nfts nftList={nfts} clickNFT={clickNFT}/>
-            <Button className="mb-3 btn btn-primary btn-lg" onClick={()=>queryNfts()}>Query </Button>
+
+          <div class="row justify-content-center">
+                    <div class="col xs-4">
+                        <div class="card h-100">  
+                            <Nfts nftList={nfts} clickNFT={clickNFT} />
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    
+                                    <h5 class="fw-bolder">View your NFT products</h5>
+                                   
+                                </div>
+                            </div>
+                           
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center">
+                                <Button className="mb-3 btn btn-primary btn-lg" onClick={()=>queryNfts()}>See your queries</Button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+          </div>
+
+            
+            
           </div> :
           <div>
           <Transfer web3={web3} myAddress={myAddress} NFT={nftInfo} setNftInfo={setNftInfo} contractaddr={contractaddr}/>
@@ -67,6 +91,7 @@ function Query({myAddress, showPopUp, web3, contractaddr,setLoading}){
         }
         {/* <Card className="mt-3 p-3 bg-primary text-white rounded">Response : {response} </Card> */}
     </div>
+    </Container>
 }
 
 export default Query;

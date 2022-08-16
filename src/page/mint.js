@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import nft from './img/nft.png';
 
-import { Button, Card,Form,Container } from 'react-bootstrap';
+import { Button, Card, Form, Container } from 'react-bootstrap';
 import erc721abi from '../components/erc721Abi';
 import { NFTStorage } from 'nft.storage'
 
@@ -53,31 +54,38 @@ function Mint({myAddress, showPopUp,web3, contractaddr, setLoading}){
     };
     return <div>
         <Container className="panel">
-
+            <div class="row gx-4 gx-lg-5 align-items-center my-5">
+                <div class="col-lg-7">
+                    <Form.Control
+                    className="mt-4 mb-4 form-control form-control-lg"
+                    value={name}
+                    onChange = {(e) =>{
+                        setName(e.target.value);
+                        }
+                    }
+                    type="text"
+                    placeholder="Name"
+                    />
+                    <Form.Control
+                    className="mb-4 form-control form-control-lg"
+                    value={description}
+                    onChange = {(e) =>{
+                        setDescription(e.target.value);
+                        }
+                    }
+                    type="text"
+                    placeholder="Attributes"
+                    />
+                    <input className="UploadImage form-control form-control-lg" type="file" onChange={handleImage} />
+                    <br/>
+                    <Button className="mb-4 p-3 btn-primary btn-lg" onClick={()=>handleQuery()}> Mint </Button>
+                </div>
+                <div class="col-lg-5">
+                    <img class="img-fluid rounded mb-4 mb-lg-0" src={nft} alt="..." />
+                </div>
+            </div>
         
-        <Form.Control
-            className="mb-3"
-            value={name}
-            onChange = {(e) =>{
-                setName(e.target.value);
-                }
-            }
-            type="text"
-            placeholder="name"
-        />
-        <Form.Control
-            className="mb-3"
-            value={description}
-            onChange = {(e) =>{
-                setDescription(e.target.value);
-                }
-            }
-            type="text"
-            placeholder="attributes"
-        />
-        <input className="UploadImage" type="file" onChange={handleImage} />
-        <br/>
-        <Button className="mb-3 btn btn-primary btn-lg" onClick={()=>handleQuery()}> Mint </Button>
+        
         </Container>
     </div>
 }
